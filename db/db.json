@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "email": "admin",
+      "firstName": "leti",
+      "lastName": "admin",
+      "password": "$2a$10$33TL1ZbtXp0HG4JFGxJcROyM6QhDyC7NWomEUJhC5W1b8aC/3w2sm",
+      "role": "admin",
+      "isActive": true,
+      "id": "1"
+    },
+    {
+      "email": "jane@mail.com",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "password": "$2a$10$Ckez.TuP6JHQc41EqjWemuK9SkgGitqEw/ljzDsRsfhZtiyjI2b.K",
+      "isActive": true,
+      "role": "user",
+      "id": "Jp9oMX5"
+    }
+  ]
+}
