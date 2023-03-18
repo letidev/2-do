@@ -39,7 +39,7 @@ const Register: FC = () => {
 
   return (
     <NonAuthenticatedGuard>
-      <BasicLayout className="w-full px-5 sm:w-[320px]">
+      <BasicLayout className="w-full px-5 sm:w-[500px]">
         <h2 className="pb-3 mb-5 text-3xl text-left border-b border-indigo-800 font-semibild">
           Register
         </h2>
