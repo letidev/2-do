@@ -12,7 +12,7 @@ const TextInput: FC<Props> = ({ label, id, ...rest }) => (
     </label>
     <input
       id={id}
-      className="block w-full border-slate-400 hover:border-indigo-400 rounded-md shadow-sm focus:ring-indigo-500 focus:indigo-teal-500 sm:text-sm"
+      className="block w-full rounded-md shadow-sm border-slate-400 hover:border-indigo-400 focus:ring-indigo-500 sm:text-sm"
       {...rest}
     />
   </div>
