@@ -6,6 +6,13 @@
       "lastName": "Smith",
       "password": "$2a$10$Ckez.TuP6JHQc41EqjWemuK9SkgGitqEw/ljzDsRsfhZtiyjI2b.K",
       "id": "Jp9oMX5"
+    },
+    {
+      "email": "leti",
+      "firstName": "Leti",
+      "lastName": "M",
+      "password": "$2a$10$z6aTzpGXFOm2in8ME2P4qumWcV/kEIdIWAczNWoWMngt2TIjJ6kMC",
+      "id": "Ym-XRs4"
     }
   ],
   "todos": [
@@ -43,6 +50,27 @@
       "status": "done",
       "userId": "Jp9oMX5",
       "id": 7
+    },
+    {
+      "title": "Something done",
+      "dueDate": "2023-03-20",
+      "status": "done",
+      "userId": "Ym-XRs4",
+      "id": 8
+    },
+    {
+      "title": "Something not done",
+      "dueDate": "2023-03-20",
+      "status": "ongoing",
+      "userId": "Ym-XRs4",
+      "id": 9
+    },
+    {
+      "title": "Something old",
+      "dueDate": "2023-03-17",
+      "status": "ongoing",
+      "userId": "Ym-XRs4",
+      "id": 10
     }
   ]
 }

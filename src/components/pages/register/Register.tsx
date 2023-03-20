@@ -46,7 +46,7 @@ const Register: FC = () => {
         <div className="mb-3 text-base font-semibold text-red-500">{error}</div>
         <form onSubmit={onSubmit}>
           <TextInput
-            type="text"
+            type="email"
             name="email"
             id="email"
             label="Email"
