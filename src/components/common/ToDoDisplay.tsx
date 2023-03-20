@@ -93,17 +93,32 @@ const ToDoDisplay: FC<Props> = ({ todo, refresh }) => {
             {moment(todo.dueDate).format("DD.MM.yyyy")}
           </div>
 
-          <IconButton onClick={() => setIsEditModalOpen(true)} icon="edit" />
+          {todo.status === "ongoing" && (
+            <IconButton
+              onClick={() => setIsEditModalOpen(true)}
+              icon="edit"
+              title="Edit item"
+            />
+          )}
           <IconButton
             onClick={() => setIsDeleteModalOpen(true)}
             icon="delete"
+            title="Delete item"
           />
           {todo.status === "ongoing" && (
-            <IconButton onClick={onCompleteTodo} icon="complete" />
+            <IconButton
+              onClick={onCompleteTodo}
+              icon="complete"
+              title="Check item as complete"
+            />
           )}
 
           {todo.status === "done" && (
-            <IconButton onClick={onRevertTodo} icon="uncomplete" />
+            <IconButton
+              onClick={onRevertTodo}
+              icon="uncomplete"
+              title="Uncheck item as complete"
+            />
           )}
         </div>
       </div>

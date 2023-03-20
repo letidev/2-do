@@ -1,12 +1,8 @@
-export type UserRole = "user" | "admin";
-
 export interface User {
   email: string;
   firstName: string;
   lastName: string;
   password: string;
-  role: UserRole;
-  isActive: boolean;
   id: string;
 }
 
@@ -15,8 +11,6 @@ export interface CreateUserDto {
   firstName: string;
   lastName: string;
   password: string;
-  role: UserRole;
-  isActive: boolean;
 }
 
 export interface RegisterUserData {

@@ -1,6 +1,5 @@
 import { FC } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import AdminHome from "./components/pages/admin-home/AdminHome";
 import Home from "./components/pages/home/Home";
 import Login from "./components/pages/login";
 import Register from "./components/pages/register";
@@ -14,8 +13,6 @@ const App: FC = () => {
         <Route path={PATHS.Regsiter} element={<Register />} />
 
         <Route path={PATHS.Home} element={<Home />} />
-
-        <Route path={PATHS.AdminHome} element={<AdminHome />} />
 
         <Route path="*" element={<Navigate replace to={PATHS.Home} />} />
       </Routes>
