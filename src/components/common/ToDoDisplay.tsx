@@ -2,7 +2,7 @@ import moment from "moment";
 import { FC, useMemo, useState } from "react";
 import { deleteTodo, editTodo } from "../../utils/http-utils/todo-requests";
 import { ToDo } from "../../utils/types/todo";
-import ConfirmationModal from "./ConfirmationModal";
+import ConfirmationModal from "./modals/ConfirmationModal";
 import IconButton from "./inputs/IconButton";
 
 interface Props {
