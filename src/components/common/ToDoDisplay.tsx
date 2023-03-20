@@ -4,6 +4,7 @@ import { deleteTodo, editTodo } from "../../utils/http-utils/todo-requests";
 import { ToDo } from "../../utils/types/todo";
 import ConfirmationModal from "./modals/ConfirmationModal";
 import IconButton from "./inputs/IconButton";
+import EditTodoModal from "./modals/EditTodoModal";
 
 interface Props {
   todo: ToDo;
@@ -19,6 +20,7 @@ const ToDoDisplay: FC<Props> = ({ todo, refresh }) => {
   );
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   let shadowStyle = "shadow-indigo-300";
 
@@ -60,6 +62,13 @@ const ToDoDisplay: FC<Props> = ({ todo, refresh }) => {
         onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={onDelete}
       />
+
+      <EditTodoModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        refresh={refresh}
+        todo={todo}
+      />
       <div className="flex flex-col items-start sm:flex-row sm:items-center">
         <div
           className={`flex-grow font-medium  ${
@@ -84,7 +93,7 @@ const ToDoDisplay: FC<Props> = ({ todo, refresh }) => {
             {moment(todo.dueDate).format("DD.MM.yyyy")}
           </div>
 
-          <IconButton onClick={() => {}} icon="edit" />
+          <IconButton onClick={() => setIsEditModalOpen(true)} icon="edit" />
           <IconButton
             onClick={() => setIsDeleteModalOpen(true)}
             icon="delete"

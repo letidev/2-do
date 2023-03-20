@@ -1,5 +1,4 @@
-import { Dialog } from "@headlessui/react";
-import React, { FC } from "react";
+import { FC } from "react";
 import Button from "../inputs/Button";
 import OutlineButton from "../inputs/OutlineButton";
 import GenericModal from "./GenericModal";
@@ -20,7 +19,7 @@ const ConfirmationModal: FC<Props> = ({
   onConfirm,
 }) => {
   return (
-    <GenericModal isOpen={isOpen} onClose={onClose}>
+    <GenericModal isOpen={isOpen} onClose={onClose} className="max-w-sm">
       <div className="mb-4 text-xl font-medium">{title}</div>
 
       <p className="text-sm text-gray-500">{text}</p>

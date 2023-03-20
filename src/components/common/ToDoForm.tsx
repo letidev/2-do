@@ -1,12 +1,15 @@
 import moment from "moment";
 import { FC, useState } from "react";
-import { createToDo } from "../../utils/http-utils/todo-requests";
+import { createToDo, editTodo } from "../../utils/http-utils/todo-requests";
+import { ToDo } from "../../utils/types/todo";
 import DateInput from "./inputs/DateInput";
 import SubmitButton from "./inputs/SubmitButton";
 import TextInput from "./inputs/TextInput";
 
 interface Props {
   refresh: () => void;
+  action: "create" | "edit";
+  todo?: ToDo;
 }
 
 const initialState = {
@@ -14,8 +17,10 @@ const initialState = {
   dueDate: moment().format("yyyy-MM-DD"),
 };
 
-const ToDoForm: FC<Props> = ({ refresh }) => {
-  const [fields, setFields] = useState(initialState);
+const ToDoForm: FC<Props> = ({ refresh, action, todo }) => {
+  const [fields, setFields] = useState(
+    todo ? { title: todo.title, dueDate: todo.dueDate } : initialState
+  );
   const [error, setError] = useState("");
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,12 +35,22 @@ const ToDoForm: FC<Props> = ({ refresh }) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    createToDo(fields.title, fields.dueDate)
-      .then(() => {
-        refresh();
-        setFields(initialState);
-      })
-      .catch((e: Error) => setError(e.message));
+    if (action === "create") {
+      createToDo(fields.title, fields.dueDate)
+        .then(() => {
+          refresh();
+          setFields(initialState);
+        })
+        .catch((e: Error) => setError(e.message));
+    }
+
+    if (action === "edit" && todo) {
+      editTodo({ ...todo, title: fields.title, dueDate: fields.dueDate }).then(
+        () => {
+          refresh();
+        }
+      );
+    }
   };
 
   return (
@@ -63,7 +78,7 @@ const ToDoForm: FC<Props> = ({ refresh }) => {
         />
       </div>
       <div className="self-end w-fit">
-        <SubmitButton text="Create" />
+        <SubmitButton text={action === "create" ? "Create" : "Save"} />
       </div>
     </form>
   );

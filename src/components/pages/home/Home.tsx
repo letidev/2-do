@@ -2,6 +2,7 @@ import moment from "moment";
 import { FC, useCallback, useEffect, useState } from "react";
 import { UserGuard } from "../../../utils/guards";
 import { getMyTodos } from "../../../utils/http-utils/todo-requests";
+import { getLoggedUser } from "../../../utils/http-utils/user-requests";
 import { ToDo } from "../../../utils/types/todo";
 import ToDoDisplay from "../../common/ToDoDisplay";
 import ToDoForm from "../../common/ToDoForm";
@@ -9,6 +10,7 @@ import BasicLayout from "../../layout/BasicLayout";
 
 const Home: FC = () => {
   const [todos, setTodos] = useState<ToDo[]>([]);
+  const user = getLoggedUser();
 
   useEffect(() => {
     getMyTodos().then((t) => setTodos(t));
@@ -21,9 +23,11 @@ const Home: FC = () => {
   return (
     <UserGuard>
       <BasicLayout className="max-w-[500px] w-full px-5 md:max-w-[640px]">
-        <div className="mb-2 text-3xl">What would you like 2 do?</div>
+        <div className="mb-2 text-3xl">
+          Hi {user?.firstName}, what would you like 2 do?
+        </div>
 
-        <ToDoForm refresh={refreshTodos} />
+        <ToDoForm refresh={refreshTodos} action="create" />
 
         <div className="mt-10 mb-2 text-2xl">Ongoing</div>
 
