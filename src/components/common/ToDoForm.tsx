@@ -6,14 +6,16 @@ import SubmitButton from "./inputs/SubmitButton";
 import TextInput from "./inputs/TextInput";
 
 interface Props {
-  onSubmitCallback?: () => void;
+  refresh: () => void;
 }
 
-const ToDoForm: FC<Props> = ({ onSubmitCallback }) => {
-  const [fields, setFields] = useState({
-    title: "",
-    dueDate: moment().format("yyyy-MM-DD"),
-  });
+const initialState = {
+  title: "",
+  dueDate: moment().format("yyyy-MM-DD"),
+};
+
+const ToDoForm: FC<Props> = ({ refresh }) => {
+  const [fields, setFields] = useState(initialState);
   const [error, setError] = useState("");
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,13 +30,12 @@ const ToDoForm: FC<Props> = ({ onSubmitCallback }) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    createToDo(fields.title, fields.dueDate).catch((e: Error) =>
-      setError(e.message)
-    );
-
-    if (onSubmitCallback) {
-      onSubmitCallback();
-    }
+    createToDo(fields.title, fields.dueDate)
+      .then(() => {
+        refresh();
+        setFields(initialState);
+      })
+      .catch((e: Error) => setError(e.message));
   };
 
   return (
