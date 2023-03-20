@@ -95,5 +95,5 @@ export const getLoggedUser = () => {
     return null;
   }
 
-  return JSON.parse(userString);
+  return JSON.parse(userString) as User;
 };

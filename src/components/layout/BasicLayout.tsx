@@ -5,7 +5,7 @@ interface Props {
 }
 
 const BasicLayout: FC<PropsWithChildren<Props>> = ({ children, className }) => (
-  <div className="flex flex-col h-screen w-full justify-center items-center bg-slate-200">
+  <div className="flex flex-col items-center justify-center w-full h-screen bg-slate-200">
     <div className={className}>{children}</div>
   </div>
 );

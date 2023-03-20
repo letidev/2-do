@@ -1,9 +1,9 @@
 export interface ToDo {
-  id: string;
+  id?: number;
   userId: string;
   title: string;
-  dueDate: Date;
-  status: "ongoing" | "done";
+  dueDate: string;
+  status: ToDoStatus;
 }
 
 export type ToDoStatus = "ongoing" | "done";

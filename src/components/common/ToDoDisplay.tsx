@@ -1,6 +1,6 @@
 import moment from "moment";
 import { FC, useMemo } from "react";
-import { ToDo } from "../../utils/types/ToDo";
+import { ToDo } from "../../utils/types/todo";
 import IconButton from "./inputs/IconButton";
 
 interface Props {
@@ -9,12 +9,24 @@ interface Props {
 
 const ToDoDisplay: FC<Props> = ({ todo: { title, status, dueDate } }) => {
   const isOverDueDate = useMemo(
-    () => moment(dueDate).isAfter(moment()),
+    () => moment(dueDate).isSameOrBefore(moment().subtract(1, "day")),
     [dueDate]
   );
 
+  let shadowStyle = "shadow-indigo-300";
+
+  if (isOverDueDate && status === "ongoing") {
+    shadowStyle = "shadow-red-200";
+  }
+
+  if (status === "done") {
+    shadowStyle = "shadow-neutral-300";
+  }
+
   return (
-    <div className="w-full px-5 py-4 shadow-md bg-slate-300 rounded-2xl shadow-indigo-300">
+    <div
+      className={`w-full px-5 py-4 shadow-md bg-slate-300 rounded-2xl ${shadowStyle}`}
+    >
       <div className="flex flex-col items-start sm:flex-row sm:items-center">
         <div className="flex-grow font-medium">{title}</div>
 
