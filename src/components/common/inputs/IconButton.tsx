@@ -4,10 +4,12 @@ import Delete from "../../../assets/delete.png";
 import Edit from "../../../assets/edit.png";
 import CheckMarkFilled from "../../../assets/check-mark-filled.png";
 import Logout from "../../../assets/logout.png";
+import User from "../../../assets/user.png";
 
 interface Props {
   onClick: () => void;
-  icon: "edit" | "delete" | "complete" | "uncomplete" | "logout";
+  icon: "edit" | "delete" | "complete" | "uncomplete" | "logout" | "user";
+  // used for displaying OS-specific tooltip
   title: string;
 }
 
@@ -21,6 +23,8 @@ const IconButton: FC<Props> = ({ onClick, icon, title }) => {
       return CheckMarkFilled;
     } else if (icon === "logout") {
       return Logout;
+    } else if (icon === "user") {
+      return User;
     }
     return Edit;
   }, [icon]);

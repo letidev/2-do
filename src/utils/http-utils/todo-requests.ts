@@ -1,18 +1,18 @@
 import axios from "axios";
 import { ToDo } from "../types/todo";
-import { getLoggedUser } from "./user-requests";
+import { getLoggedUserId } from "./user-requests";
 
 const apiUrl = "http://localhost:3005/todos";
 
 export const createToDo = async (title: string, dueDate: string) => {
-  const user = getLoggedUser();
+  const userId = getLoggedUserId();
 
-  if (user) {
+  if (userId) {
     const todo: ToDo = {
       title: title,
       dueDate: dueDate,
       status: "ongoing",
-      userId: user.id,
+      userId: userId,
     };
 
     return axios.post<ToDo>(apiUrl, todo).then((res) => res.data);
@@ -28,9 +28,9 @@ export const deleteTodo = async (id?: number) => {
 };
 
 export const getMyTodos = async () => {
-  const user = getLoggedUser();
+  const userId = getLoggedUserId();
 
   return axios
-    .get<ToDo[]>(`${apiUrl}?userId=${user?.id}`)
+    .get<ToDo[]>(`${apiUrl}?userId=${userId}`)
     .then((res) => res.data);
 };

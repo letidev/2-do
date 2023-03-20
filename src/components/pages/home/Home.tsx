@@ -4,17 +4,35 @@ import { useNavigate } from "react-router-dom";
 import { PATHS } from "../../../utils/constants";
 import { UserGuard } from "../../../utils/guards";
 import { getMyTodos } from "../../../utils/http-utils/todo-requests";
-import { getLoggedUser, logout } from "../../../utils/http-utils/user-requests";
+import {
+  getLoggedUserId,
+  getUserById,
+  logout,
+} from "../../../utils/http-utils/user-requests";
 import { ToDo } from "../../../utils/types/todo";
+import { User } from "../../../utils/types/user";
 import IconButton from "../../common/inputs/IconButton";
+import EditUserModal from "../../common/modals/EditUserModal";
 import ToDoDisplay from "../../common/ToDoDisplay";
 import ToDoForm from "../../common/ToDoForm";
 import BasicLayout from "../../layout/BasicLayout";
 
 const Home: FC = () => {
   const [todos, setTodos] = useState<ToDo[]>([]);
-  const user = getLoggedUser();
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+  const userId = getLoggedUserId();
+  const [user, setUser] = useState<User>();
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userId) {
+      logout();
+      navigate(PATHS.Login);
+    } else {
+      getUserById(userId).then((user) => setUser(user));
+    }
+  }, [navigate, userId]);
 
   useEffect(() => {
     getMyTodos().then((t) => setTodos(t));
@@ -27,7 +45,20 @@ const Home: FC = () => {
   return (
     <UserGuard>
       <BasicLayout className="max-w-[500px] w-full px-5 md:max-w-[640px]">
+        {user && (
+          <EditUserModal
+            isOpen={isUserModalOpen}
+            onClose={() => setIsUserModalOpen(false)}
+            user={user}
+          />
+        )}
+
         <div className="flex flex-row justify-end w-full mb-10 gap-x-5">
+          <IconButton
+            onClick={() => setIsUserModalOpen(true)}
+            icon="user"
+            title="Edit your profile"
+          />
           <IconButton
             onClick={() => {
               logout();

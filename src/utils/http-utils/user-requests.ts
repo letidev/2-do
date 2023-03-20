@@ -5,8 +5,16 @@ import bcrypt from "bcryptjs";
 const apiUrl = "http://localhost:3005/users";
 const loggedUserKey = "loggedUserKey";
 
-export const saveUser = (user: User) => {
-  axios.put<User>(`${apiUrl}/${user.id}`, user);
+export const saveUser = async (user: User) => {
+  const userFromDb = await getUserById(user.id);
+
+  const newUser = { ...userFromDb, ...user };
+
+  return axios.put<User>(`${apiUrl}/${user.id}`, newUser);
+};
+
+export const getUserById = async (userId: string) => {
+  return axios.get<User>(`${apiUrl}/${userId}`).then((res) => res.data);
 };
 
 export const getUserExists = async (email: string) => {
@@ -56,9 +64,7 @@ export const login = async (email: string, password: string) => {
       throw new Error(errorMessage);
     }
 
-    const { password: _pwd, ...userWithoutPassword } = user;
-
-    sessionStorage.setItem(loggedUserKey, JSON.stringify(userWithoutPassword));
+    sessionStorage.setItem(loggedUserKey, user.id);
 
     return user;
   }
@@ -68,12 +74,12 @@ export const logout = () => {
   sessionStorage.removeItem(loggedUserKey);
 };
 
-export const getLoggedUser = () => {
-  const userString = sessionStorage.getItem(loggedUserKey);
+export const getLoggedUserId = () => {
+  const userId = sessionStorage.getItem(loggedUserKey);
 
-  if (!userString) {
-    return null;
+  if (!userId) {
+    return undefined;
   }
 
-  return JSON.parse(userString) as User;
+  return userId;
 };
