@@ -1,18 +1,20 @@
 import React, { FC, useState } from "react";
-import { saveUser } from "../../utils/http-utils/user-requests";
-import { User } from "../../utils/types/user";
+import { changePassword } from "../../utils/http-utils/user-requests";
 import SubmitButton from "./inputs/SubmitButton";
 import TextInput from "./inputs/TextInput";
 
 interface Props {
-  user: User;
+  userId: string;
 }
 
-const UserForm: FC<Props> = ({ user }) => {
-  const [fields, setFields] = useState({
-    firstName: user.firstName,
-    lastName: user.lastName,
-  });
+const initialState = {
+  oldPassword: "",
+  newPassword: "",
+  confirmNewPassword: "",
+};
+
+const ResetPasswordForm: FC<Props> = ({ userId }) => {
+  const [fields, setFields] = useState(initialState);
   const [showSuccess, setShowSuccess] = useState(false);
   const [error, setError] = useState("");
 
@@ -28,26 +30,24 @@ const UserForm: FC<Props> = ({ user }) => {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    saveUser({
-      ...user,
-      firstName: fields.firstName,
-      lastName: fields.lastName,
-    })
+    changePassword(
+      userId,
+      fields.oldPassword,
+      fields.newPassword,
+      fields.confirmNewPassword
+    )
       .then(() => {
         setError("");
         setShowSuccess(true);
+        setFields(initialState);
       })
       .catch((e: Error) => {
-        setShowSuccess(false);
         setError(e.message);
+        setShowSuccess(false);
       });
   };
   return (
     <div className="flex flex-col">
-      <div className="mb-4 text-lg font-medium text-slate-800">
-        {user.email}
-      </div>
-
       <div className="mb-3 text-base font-semibold text-red-500">{error}</div>
       {showSuccess && (
         <div className="mb-3 text-base font-semibold text-green-600">
@@ -56,25 +56,32 @@ const UserForm: FC<Props> = ({ user }) => {
       )}
       <form className="flex flex-col" onSubmit={onSubmit}>
         <TextInput
-          type="text"
-          name="firstName"
-          id="firstName"
-          label="First Name"
-          placeholder="Jane"
+          type="password"
+          name="oldPassword"
+          id="oldPassword"
+          label="Old Password"
           required
           onChange={onInputChange}
-          value={fields.firstName}
+          value={fields.oldPassword}
         />
 
         <TextInput
-          type="text"
-          name="lastName"
-          id="lastName"
-          label="Last name"
-          placeholder="Smith"
+          type="password"
+          name="newPassword"
+          id="newPassword"
+          label="New password"
           required
           onChange={onInputChange}
-          value={fields.lastName}
+          value={fields.newPassword}
+        />
+
+        <TextInput
+          type="password"
+          name="confirmNewPassword"
+          id="confirmNewPassword"
+          label="Confirm New Password"
+          onChange={onInputChange}
+          value={fields.confirmNewPassword}
         />
         <div className="self-end w-fit">
           <SubmitButton text="Save" />
@@ -84,4 +91,4 @@ const UserForm: FC<Props> = ({ user }) => {
   );
 };
 
-export default UserForm;
+export default ResetPasswordForm;

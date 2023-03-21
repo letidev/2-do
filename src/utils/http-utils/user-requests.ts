@@ -13,6 +13,35 @@ export const saveUser = async (user: User) => {
   return axios.put<User>(`${apiUrl}/${user.id}`, newUser);
 };
 
+export const changePassword = async (
+  userId: string,
+  oldPassword: string,
+  newPassword: string,
+  confirmNewPassword: string
+) => {
+  if (newPassword !== confirmNewPassword) {
+    throw new Error("New passwords must match");
+  }
+
+  const userFromDb = await getUserById(userId);
+
+  const match = await bcrypt.compare(oldPassword, userFromDb.password);
+
+  if (!match) {
+    throw new Error("Wrong password.");
+  }
+
+  const newMatch = await bcrypt.compare(newPassword, userFromDb.password);
+
+  if (newMatch) {
+    throw new Error("Old password and new password must be different.");
+  }
+
+  const passwordToSave = await bcrypt.hash(newPassword, 10);
+
+  return saveUser({ ...userFromDb, password: passwordToSave });
+};
+
 export const getUserById = async (userId: string) => {
   return axios.get<User>(`${apiUrl}/${userId}`).then((res) => res.data);
 };
