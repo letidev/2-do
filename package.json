@@ -21,7 +21,6 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject",
     "start-server": "json-server --watch ./db/db.json --port 3005"
   },
   "eslintConfig": {
