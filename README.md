@@ -8,12 +8,18 @@ Functionally there is login/register authentication, managing the todos and edit
 
 In the project directory, you can run:
 
+### `npm install`
+
+To install all dependencies of the project. And then:
+
+---
+
 ### `npm start`
 
-Runs the app in the development mode.\
+Runs the app in development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-In order for the app to be functional, though, you must also start the `json-server` with:
+In order for the app to be functional, though, you must also start the `json-server` in another terminal with:
 
 ### `npm run start-server`
 
